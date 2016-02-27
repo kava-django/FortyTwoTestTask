@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1 class="descr">42 Coffee Cups Test Assignment</h1>
+      <div class="jumbotron">
+            <div class="row">
+              <div class="col-sm-6">
+                <div><b>Name:</b> {{ contact.name }}</div>
+                <div><b>Last Name:</b> {{ contact.surname }}</div>
+                <div><b>Date of birth:</b> {{ contact.date_of_birth|date:"d F, Y" }}</div>
+                <div><b>Bio</b>
+                <div>{{ contact.bio|linebreaksbr }}</div>
+                </div>
+                </div>
+              <div class="col-sm-6">
+                <div><b>Contacts</b></div>
+                <div><b>Email:</b> {{ contact.email }}</div>
+                <div><b>Jabber:</b> {{ contact.jabber }}</div>
+                <div><b>Skype:</b> {{ contact.skype }}</div>
+                <div><b>Other contacts</b>
+                <div>{{ contact.other_contacts|linebreaksbr }}</div>
+              </div>
+
+           </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock content %}
