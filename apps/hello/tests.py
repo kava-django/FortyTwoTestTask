@@ -1,9 +1,20 @@
-from django.test import TestCase
-
+from django.test import TestCase, Client
+from apps.hello.models import MyContacts
 # Create your tests here.
 
 
 class SomeTests(TestCase):
+    fixtures = ['initial_data.json']
     def test_math(self):
-        "put docstrings in your tests"
-        assert(2 + 2 == 5)
+        "tests of contains and status code"
+        self.client = Client()
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Pavlo')
+        self.assertContains(response, 'Bredikhin')
+        self.assertContains(response, '12 July, 1990')
+        self.assertContains(response, 'Become Django Developer')
+        self.assertContains(response, 'kava.django@gmail.com')
+        self.assertContains(response, 'kava-django@42cc.co')
+        self.assertContains(response, 'ng_1990')
+        self.assertContains(response, 'https://github.com/kava-django/FortyTwoTestTask/tree/t1_contact')
