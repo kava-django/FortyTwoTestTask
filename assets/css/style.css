@@ -139,6 +139,9 @@
 	vertical-align:middle;
 	
 }
+.bold-font{
+    font-weight: bold;
+}
 /*.my_table{
 	text-align:center;
 	border:#bdbdbd 1px solid;
@@ -170,7 +173,7 @@ table tbody tr th{
 table tbody tr td{
 	vertical-align:middle;
 	border:#bdbdbd 1px solid;
-	font-weight: bold;
+	/*font-weight: bold;*/
 	font-size: 12pt;
 	/*
 	border-collapse:collapse;

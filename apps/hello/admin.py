@@ -6,5 +6,3 @@ class MyContactsAdmin(admin.ModelAdmin):
 	list_display = ['name', 'surname', 'email', 'skype']
 
 admin.site.register(MyContacts, MyContactsAdmin)
-
-

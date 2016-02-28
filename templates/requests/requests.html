@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    {% if requests_new %}
+        ({{ requests_new }}) Requests
+    {% else %}
+        Requests
+    {% endif %}
+{% endblock title %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="page-header">
+    <h1 class="descr">42 Coffee Cups Test Assignment</h1>
+      <div class="jumbotron">
+        <h2 class="dolgnosti">Last 10 Requests</h2>
+          <div class="panel panel-default">
+            <table class="table">
+
+              <tbody>
+		<tr>
+		<th>#</th>
+		<th>Date</th>
+		<th>Method</th>
+		<th>Path</th>
+		<th>Server Protocol</th>
+		<th>IP</th>
+		</tr>
+
+{% for request in ten_request %}
+		{% if not request.viewed %}
+		  <tr class="bold-font">
+		{% else %}
+		  <tr>
+		{% endif %}
+                <td>{{ forloop.counter }}</td>
+                <td>{{ request.date }}</td>
+                <td>{{ request.method }}</td>
+                <td>{{ request.path }}</td>
+                <td>{{ request.server_protocol }}</td>
+                <td>{{ request.ip_addr }}</td>
+                </tr>
+{% endfor %}
+
+              </tbody>
+            </table>
+      </div>
+<a href="{% url 'index' %}">home</a>
+  </div>
+</div>
+
+{% endblock content %}
