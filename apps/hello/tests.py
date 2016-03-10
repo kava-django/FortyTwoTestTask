@@ -1,13 +1,13 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from apps.hello.models import MyContacts
 # Create your tests here.
 
 
-class SomeTests(TestCase):
+class MyInfoTest(TestCase):
     fixtures = ['initial_data.json']
-    def test_math(self):
+    def test_contains(self):
         "tests of contains and status code"
-        self.client = Client()
+        #self.client = Client()
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Pavlo')

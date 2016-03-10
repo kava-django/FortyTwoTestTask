@@ -12,13 +12,20 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
         <link rel="stylesheet" href="{% static 'css/screen.css' %}" media="screen, projection"/>
-  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
-  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
         {% block extra_head %}{% endblock extra_head %}
 
     </head>
     <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
         {% block content %}{% endblock content %}
+
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/jquery-1.12.1.min.js' %}"></script>
+        <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}"></script>
+        <script src="{% static 'js/underscore-min.js' %}"></script>
+        <script src="{% static 'js/script.js' %}"></script>
+
     </body>
 </html>
