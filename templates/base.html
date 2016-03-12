@@ -19,8 +19,31 @@
 
     </head>
     <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
+     <div class="container">
+       <nav class="navbar navbar-default">
+         <div class="container-fluid">
+           <div class="navbar-header">
+           <a class="navbar-brand" href="{% url 'index' %}">
+             <img alt="42_CC" src="">
+           </a>
+           </div>
+                    {% if not user.is_authenticated %}
+<p class="navbar-text navbar-right"><a href="{% url 'django.contrib.auth.views.login' %}">Login</a></p>
+                    {% else %}
+<p class="navbar-text navbar-right">Hello, <b>{{ user }}</b>! <a href="{% url 'django.contrib.auth.views.logout' %}?next=/">Logout</a></p>
+                    {% endif %}
+
+           
+         </div>
+       </nav>
+
+        <div class="page-header">
+          <h1 class="descr">42 Coffee Cups Test Assignment</h1>
+
         {% block content %}{% endblock content %}
 
+        </div>
+      </div>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
         <script src="{% static 'js/jquery-1.12.1.min.js' %}"></script>
         <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}"></script>
