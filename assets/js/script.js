@@ -27,10 +27,6 @@ $(document).ready(function(){
 
     if ($(".requestsTable").length) {
 
-        $("p").click(function(){
-            $(this).hide();
-        });
-
         function sendViews(requests) {
             $.ajax({
                 method: "post",
