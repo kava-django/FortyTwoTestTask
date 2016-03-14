@@ -9,8 +9,12 @@
                 <div><b>Name:</b> {{ contact.name }}</div>
                 <div><b>Last Name:</b> {{ contact.surname }}</div>
                 <div><b>Date of birth:</b> {{ contact.date_of_birth|date:"d F, Y" }}</div>
-                <div><b>Bio</b>
-                <div>{{ contact.bio|linebreaksbr }}</div>
+                <div><b>Photo:</b>
+                <div>
+                {% if contact.photo %}
+                <img src="{{ contact.photo.url }}">
+                {% endif %}
+                </div>
                 </div>
               </div>
 
@@ -22,9 +26,12 @@
                 <div><b>Other contacts</b>
                 <div>{{ contact.other_contacts|linebreaksbr }}</div>
                 </div>
+                <div><b>Bio</b>
+                <div>{{ contact.bio|linebreaksbr }}</div>
+                </div>
               </div>
           </div>
       </div>
-<a href="{% url 'requests' %}">requests</a>
+<p><a href="{% url 'edit' contact.id %}">edit</a> <a href="{% url 'requests' %}">requests</a></p>
 
 {% endblock content %}

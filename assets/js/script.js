@@ -25,6 +25,7 @@ $(document).ready(function(){
         }
     });
 
+
     if ($(".requestsTable").length) {
 
         function sendViews(requests) {
@@ -90,6 +91,91 @@ $(document).ready(function(){
 
         fillRequests();
         setInterval(fillRequests, 5000); //5 sec delay
+
+    }
+
+
+    if ($("#edit_form").length) {
+
+/*
+         function managestatusVisible(show){
+            var status = $('#message');
+            if(show){
+               status.show();
+            }else{
+                status.hide();
+            }
+         }
+
+         function manageFormStatus(success){
+             var status = $('#message');
+             if (success){
+                managestatusVisible(true);
+                status.addClass('alert-success');
+                status.text('Data saved done!');
+
+            }else{
+                managestatusVisible(true);
+                status.addClass('alert-danger');
+                status.text('Error saving data!');
+             }
+
+         }
+
+         function formElementsEnableDisable(enable){
+             if (enable){
+                $("#edit_form :input").prop('disabled', false);
+             }else{
+                $("#edit_form :input").prop('disabled', true);
+             }
+         }
+
+
+        managestatusVisible(false);
+
+
+
+
+         function showErrors(responseText, statusText, xhr, $form) {
+             manageFormStatus(false);
+             formElementsEnableDisable(true);
+         }
+
+
+*/
+
+        var options = {
+             //target: '#message',
+             success: showSuccess,
+             error: showSuccess,
+         };
+
+
+
+
+         function formElementsEnableDisable(enable){
+             if (enable){
+                $("#edit_form :input").prop('disabled', false);
+             }else{
+                $("#edit_form :input").prop('disabled', true);
+             }
+         }
+
+         function showSuccess() {
+           $("#edit_form :input").prop('disabled', true);
+
+         }
+
+        $('#edit_form').submit(function () {
+            $(this).ajaxSubmit();
+showSuccess();
+            //formElementsEnableDisable(false);
+            //$("#submit_button").prop( "disabled", true);
+            return false
+        });
+
+
+
 
     }
     

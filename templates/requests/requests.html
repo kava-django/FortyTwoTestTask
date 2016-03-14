@@ -18,7 +18,8 @@
 		</tr>
 
               <tbody class="requestsTable">
-{% for request in ten_request %}
+
+	       {% for request in ten_request %}
 		{% if not request.viewed %}
 		  <tr class="bold-font">
 		{% else %}
@@ -30,12 +31,12 @@
                 <td>{{ request.server_protocol }}</td>
                 <td>{{ request.ip_addr }}</td>
                 </tr>
-{% endfor %}
+	       {% endfor %}
 
               </tbody>
             </table>
       </div>
   </div>
-<a href="{% url 'index' %}">home</a>
+<p><a href="{% url 'index' %}">home</a></p>
 
 {% endblock content %}
