@@ -3,16 +3,6 @@
 
 {% block content %}
       <div class="jumbotron">
-        {% comment %}
-        {% if messages %}
-	{% for message in messages %}
-	<div id="message" class="alert alert-success" role="alert">
-	<button type="button" class="close" data-dismiss="alert" aria-label="close" onclick="$('.alert').hide()">&times;</button>
-	{{ message }}</div>
-	{% endfor %}
-	{% endif %}
-        {% endcomment %}
-	<div id="message" class="alert" role="alert"></div>
         <form id="edit_form" class="form" method="post" action="{% url 'edit' object.id %}">
         {% csrf_token %}
           <div class="row">
@@ -67,6 +57,12 @@
                 {{ form.bio }}
                 {{ form.bio.errors }}
               </div>
+            </div>
+          </div>
+          <div class="row">
+	      <div id="message" class="alert" role="alert"></div>
+            <div id="ajax_loader" class="col-sm-1">
+              <img src="{{ STATIC_URL }}images/ajax-loader.gif">
             </div>
           </div>
           <div class="col-sm-1">

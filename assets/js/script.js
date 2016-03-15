@@ -96,6 +96,51 @@ $(document).ready(function(){
 
 
     if ($("#edit_form").length) {
+         $('#ajax_loader').hide();
+         $('#message').hide();
+
+
+         function show_enable() {
+             $('#message').show();
+             $('#ajax_loader').show();
+             formElementsEnableDisable(true);
+         }
+
+
+         function showSuccess() {
+             show_enable();
+             $('#message').text('Info has been sucessfully changed!').attr('class', 'alert alert-success');
+         }
+
+         function showErrors() {
+             show_enable();
+             $('#message').text('Oops! Something is wrong!').attr('class', 'alert alert-danger');
+         }
+
+        var options = {
+             success: showSuccess,
+             error: showErrors,
+         };
+
+         function formElementsEnableDisable(enable){
+             if (enable){
+                setTimeout(function(){
+                $("#edit_form :input").prop('disabled', false);
+                }, 1000)
+                $('#message').delay(1000).hide(0);
+                $('#ajax_loader').delay(1000).hide(0);
+             }else{
+                $("#edit_form :input").prop('disabled', true);
+
+             }
+         }
+
+
+        $('#edit_form').submit(function () {
+            $(this).ajaxSubmit(options);
+            formElementsEnableDisable(false);
+            return false
+        });
 
 /*
          function managestatusVisible(show){
@@ -134,48 +179,30 @@ $(document).ready(function(){
         managestatusVisible(false);
 
 
+         function showSuccess(responseText, statusText, xhr, $form) {
+             manageFormStatus(true);
+             formElementsEnableDisable(true);
 
+         }
 
          function showErrors(responseText, statusText, xhr, $form) {
              manageFormStatus(false);
              formElementsEnableDisable(true);
          }
 
-
-*/
-
-        var options = {
-             //target: '#message',
+         var options = {
+             //target: '#submitStatus',
              success: showSuccess,
-             error: showSuccess,
+             error: showErrors,
          };
 
 
-
-
-         function formElementsEnableDisable(enable){
-             if (enable){
-                $("#edit_form :input").prop('disabled', false);
-             }else{
-                $("#edit_form :input").prop('disabled', true);
-             }
-         }
-
-         function showSuccess() {
-           $("#edit_form :input").prop('disabled', true);
-
-         }
-
-        $('#edit_form').submit(function () {
-            $(this).ajaxSubmit();
-showSuccess();
-            //formElementsEnableDisable(false);
-            //$("#submit_button").prop( "disabled", true);
-            return false
-        });
-
-
-
+         $('#edit_form').submit(function () {
+             $(this).ajaxSubmit(options);
+             formElementsEnableDisable(false);
+             return false;
+         });
+*/
 
     }
     
