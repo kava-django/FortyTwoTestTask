@@ -5,8 +5,7 @@ from django.views.generic import View
 from django.http import HttpResponse
 from .models import Request
 
-
-def requests(request):
+'''
     all_requests = Request.objects.all()
     if all_requests.count() > 10:
         q = all_requests.order_by('-date')[0:10]
@@ -17,8 +16,10 @@ def requests(request):
         ten_request = all_requests.order_by('-date')
     else:
         ten_request = all_requests.order_by('-date')
+'''
 
-    return render_to_response('requests/requests.html', {'ten_request': ten_request},        context_instance=RequestContext(request))
+def requests(request):
+    return render_to_response('requests/requests.html', {'ten_request': Request.objects.all().order_by('-date')[0:10]}, context_instance=RequestContext(request))
 
 
 

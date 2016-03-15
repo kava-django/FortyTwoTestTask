@@ -112,9 +112,18 @@ $(document).ready(function(){
              $('#message').text('Info has been sucessfully changed!').attr('class', 'alert alert-success');
          }
 
-         function showErrors() {
+
+         function showErrors(responseText) {
              show_enable();
-             $('#message').text('Oops! Something is wrong!').attr('class', 'alert alert-danger');
+
+             var errors_message = responseText.responseJSON
+             var errors = []
+             for (var key in errors_message){
+                 errors += errors_message[key]
+             }
+
+             $('#message').text('Oops! ' + errors).attr('class', 'alert alert-danger');
+
          }
 
         var options = {
@@ -125,9 +134,9 @@ $(document).ready(function(){
          function formElementsEnableDisable(enable){
              if (enable){
                 setTimeout(function(){
-                $("#edit_form :input").prop('disabled', false);
+                    $("#edit_form :input").prop('disabled', false);
                 }, 1000)
-                $('#message').delay(1000).hide(0);
+                $('#message').delay(5000).hide(0);
                 $('#ajax_loader').delay(1000).hide(0);
              }else{
                 $("#edit_form :input").prop('disabled', true);
@@ -142,67 +151,21 @@ $(document).ready(function(){
             return false
         });
 
-/*
-         function managestatusVisible(show){
-            var status = $('#message');
-            if(show){
-               status.show();
-            }else{
-                status.hide();
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#preview').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
             }
-         }
-
-         function manageFormStatus(success){
-             var status = $('#message');
-             if (success){
-                managestatusVisible(true);
-                status.addClass('alert-success');
-                status.text('Data saved done!');
-
-            }else{
-                managestatusVisible(true);
-                status.addClass('alert-danger');
-                status.text('Error saving data!');
-             }
-
-         }
-
-         function formElementsEnableDisable(enable){
-             if (enable){
-                $("#edit_form :input").prop('disabled', false);
-             }else{
-                $("#edit_form :input").prop('disabled', true);
-             }
-         }
-
-
-        managestatusVisible(false);
-
-
-         function showSuccess(responseText, statusText, xhr, $form) {
-             manageFormStatus(true);
-             formElementsEnableDisable(true);
-
-         }
-
-         function showErrors(responseText, statusText, xhr, $form) {
-             manageFormStatus(false);
-             formElementsEnableDisable(true);
-         }
-
-         var options = {
-             //target: '#submitStatus',
-             success: showSuccess,
-             error: showErrors,
-         };
-
-
-         $('#edit_form').submit(function () {
-             $(this).ajaxSubmit(options);
-             formElementsEnableDisable(false);
-             return false;
-         });
-*/
+        }
+        $(document).on('change', '#id_photo', function(){
+            readURL(this);
+        });
+        
 
     }
     

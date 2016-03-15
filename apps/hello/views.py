@@ -42,7 +42,7 @@ class AjaxableResponseMixin(object):
             return response
 
 
-class EditInfo(UpdateView):
+class EditInfo(AjaxableResponseMixin, UpdateView):
     model = MyContacts
     template_name = 'edit.html'
     form_class = MyContactsModelForm
