@@ -96,6 +96,12 @@ $(document).ready(function(){
 
 
     if ($("#edit_form").length) {
+         $( ".datepicker" ).datepicker({
+           changeMonth: true,
+           changeYear: true,
+           yearRange: "1900:2026",
+           dateFormat: 'yy-mm-dd',
+         });
          $('#ajax_loader').hide();
          $('#message').hide();
 
@@ -119,10 +125,10 @@ $(document).ready(function(){
              var errors_message = responseText.responseJSON
              var errors = []
              for (var key in errors_message){
-                 errors += errors_message[key]
+                 errors += errors_message[key] + " "
              }
 
-             $('#message').text('Oops! ' + errors).attr('class', 'alert alert-danger');
+             $('#message').text('Oops! Something is wrong:) ' + errors).attr('class', 'alert alert-danger');
 
          }
 

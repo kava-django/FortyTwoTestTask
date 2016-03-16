@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
+{% block extra_head %}
+
+{% endblock extra_head %}
+
 {% block content %}
       <div class="jumbotron">
         <form id="edit_form" class="form" method="post" action="{% url 'edit' object.id %}">
@@ -23,7 +27,7 @@
                 <label>{{ form.photo.label }}:</label> 
                 {{ form.photo }}
                 {% if object.photo %}
-                <div><img src="{{ object.photo.url }}" id="preview" ></div>
+                <div><img src="{{ object.photo.url }}" id="preview" height="auto" width="200"></div>
                 {% endif %}
               </div>
             </div>
@@ -69,4 +73,6 @@
 {% endblock content %}
 {% block add_js %}
   {{ form.media }}
+
+
 {% endblock add_js %}
