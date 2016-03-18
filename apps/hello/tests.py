@@ -18,3 +18,5 @@ class MyInfoTest(TestCase):
         self.assertContains(response, 'kava-django@42cc.co')
         self.assertContains(response, 'ng_1990')
         self.assertContains(response, 'https://github.com/kava-django/FortyTwoTestTask/tree/t1_contact')
+
+

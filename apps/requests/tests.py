@@ -21,8 +21,10 @@ class RequestsModelTest(TestCase):
     def test_requests(self):
         response = self.client.get('/requests/')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(Request.objects.count(), 10)
-        self.assertContains(response, '31.215.125.35')
+        self.assertEqual(Request.objects.count(), 21)
+        self.assertContains(response, 'requests')
+        for i in range(31, 40):
+            self.assertContains(response, '31.215.125.%d'%(i))
 
     def test_ajax(self):
         response = self.client.post('/requests/ajaxrequests/', {'data': json.dumps([{'id': 1, 'viewed': False}, {'id': 2, 'viewed': True}])}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
