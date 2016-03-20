@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load my_tt %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -37,7 +38,8 @@
            </p>
            {% else %}
            <p class="navbar-text navbar-right">Hello, <b>{{ user }}</b>! 
-             <a href="{% url 'django.contrib.auth.views.logout' %}?next=/">Logout</a>
+             <a href="{% url 'django.contrib.auth.views.logout' %}?next=/">Logout</a> or 
+             <a href="{% edit_link user %}">edit admin info</a>
            </p>
            {% endif %}
 
