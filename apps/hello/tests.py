@@ -20,3 +20,49 @@ class MyInfoTest(TestCase):
         self.assertContains(response, 'https://github.com/kava-django/FortyTwoTestTask/tree/t1_contact')
 
 
+class ContainsEditTest(TestCase):
+    fixtures = ['initial_data.json']
+
+    def test_contains_edit(self):
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'edit')
+        self.assertContains(response, 'login')
+
+    def test_login(self):
+        self.client.login(username='admin', password='admin')
+        response = self.client.get('/edit/1/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit_info_valid(self):
+        self.client.login(username='admin', password='admin')
+        response = self.client.get('/edit/1/')
+        edit_data = {'name': 'Test1',
+                     'surname': 'Test2',
+                     'date_of_birth': '1990-01-01',
+                     'bio': 'Test3',
+                     'email': 'test4@test.tst',
+                     'jabber': 'test5@test.tst',
+                     'skype': 'test6',
+                     'other_contacts': 'test7',
+                     'photo': ''}
+        edit = self.client.post('/edit/1/', edit_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(edit.status_code, 200)
+        response = self.client.get('/')
+        self.assertContains(response, 'Test1')
+
+    def test_edit_info_invalid(self):
+        self.client.login(username='admin', password='admin')
+        response = self.client.get('/edit/1/')
+        edit_data = {'name': 'Test1',
+                     'surname': 'Test2',
+                     'date_of_birth': '1990-01-01',
+                     'bio': 'Test3',
+                     'email': 'test4@test',
+                     'jabber': 'test5@test.tst',
+                     'skype': 'test6',
+                     'other_contacts': 'test7',
+                     'photo': ''}
+        edit = self.client.post('/edit/1/', edit_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(edit.status_code, 400)
+
