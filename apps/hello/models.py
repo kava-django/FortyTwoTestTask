@@ -2,6 +2,9 @@ from django.db import models
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from PIL import Image
 import StringIO
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from datetime import datetime
 
 class MyContacts(models.Model):
     name = models.CharField(max_length=70)
@@ -48,5 +51,35 @@ class MyContacts(models.Model):
         except:
             pass  # when new photo then we do nothing, normal case
         super(MyContacts, self).save(*args, **kwargs)
+
+
+class SignalProcessor(models.Model):
+    model_name = models.CharField(max_length=255)
+    model_entry = models.CharField(max_length=255)
+    date = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return '%s - [%s]' % (self.model_name, self.model_entry)
+
+
+
+def delete_signal(sender, instance, **kwargs):
+    if sender.__name__ != 'SignalProcessor' and sender.__name__ != 'LogEntry':
+        SignalProcessor.objects.create(model_name = instance.__class__.__name__,
+                                  model_entry = 'deletion',
+                                  date = datetime.now()
+                                  )
+
+
+def save_signal(sender, instance, created, **kwargs):
+    if sender.__name__ != 'SignalProcessor' and sender.__name__ != 'LogEntry':
+        SignalProcessor.objects.create(model_name = instance.__class__.__name__,
+                                  model_entry = 'creation' if created else 'editing',
+                                  date = datetime.now()
+                                  )
+
+post_save.connect(save_signal, dispatch_uid="my_unique_identifier")
+post_delete.connect(delete_signal, dispatch_uid="my_unique_identifier")
+
 
 

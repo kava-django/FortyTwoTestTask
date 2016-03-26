@@ -1,5 +1,8 @@
 from django.test import TestCase
-from apps.hello.models import MyContacts
+from apps.hello.models import MyContacts, SignalProcessor
+from StringIO import StringIO
+from django.core.management import call_command
+from django.db.models import get_models
 # Create your tests here.
 
 
@@ -65,4 +68,49 @@ class ContainsEditTest(TestCase):
                      'photo': ''}
         edit = self.client.post('/edit/1/', edit_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(edit.status_code, 400)
+
+
+class SignalProcessorTest(TestCase):
+    fixtures = ['initial_data.json']
+
+    def test_creation(self):
+        response = self.client.get('/')
+        last_obj = SignalProcessor.objects.last()
+        self.assertEqual(last_obj.model_entry, 'creation')
+        
+    def test_editing(self):
+        info = MyContacts.objects.first()
+        info.name = 'Test'
+        info.save()
+        self.assertEqual(info.name, 'Test')
+        last_obj = SignalProcessor.objects.last()
+        self.assertEqual(last_obj.model_entry, 'editing')
+        
+    def test_editing(self):
+        info = MyContacts.objects.first()
+        info.delete()
+        last_obj = SignalProcessor.objects.last()
+        self.assertEqual(last_obj.model_entry, 'deletion')
+        
+        
+class MyCommandTest(TestCase):
+
+    def test_command(self):
+        content = StringIO()
+        call_command('project_models', stdout=content)
+        for model in get_models():
+            self.assertIn(model.__name__, content.getvalue())
+
+class MyTemplateTagTest(TestCase):
+    fixtures = ['initial_data.json']
+
+    def test_tt_contains(self):
+        self.client.login(username='admin', password='admin')
+        response = self.client.get('/')
+        self.assertContains(response, '/admin/auth/user/1/')
+
+
+
+
+
 

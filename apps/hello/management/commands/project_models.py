@@ -12,6 +12,6 @@ class Command(BaseCommand):
                                                             model._default_manager.count()))
 
         map(self.stdout.write, models_list)
-        models_list = ['error: ' + model for model in models_list]
-        map(self.stderr.write, models_list)
+        models_error_list = ['error: ' + model for model in models_list]
+        map(self.stderr.write, models_error_list)
 
