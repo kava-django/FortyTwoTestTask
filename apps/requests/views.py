@@ -19,14 +19,14 @@ from .models import Request
 '''
 
 def requests(request):
-    return render_to_response('requests/requests.html', {'ten_request': Request.objects.all().order_by('-date')[0:10]}, context_instance=RequestContext(request))
+    return render_to_response('requests/requests.html', {'ten_request': Request.objects.all().order_by('-priority', '-date')[0:10]}, context_instance=RequestContext(request))
 
 
 
 class AjaxRequests(View):
 
     def get(self, request):
-        ten_request = Request.objects.all().order_by('-date')[0:10]
+        ten_request = Request.objects.all().order_by('-priority', '-date')[0:10]
         new_requests_count = len([new_request for new_request in ten_request
                                   if not new_request.viewed])
 
@@ -36,7 +36,8 @@ class AjaxRequests(View):
                              'server_protocol': request.server_protocol,
                              'ip_addr': request.ip_addr,
                              'viewed': request.viewed,
-                             'id': request.id,}
+                             'id': request.id,
+                             'priority': request.priority,}
                             for request in ten_request]
         return HttpResponse(json.dumps({'ajaxrequests': requests_to_json,
                                         'new_requests': new_requests_count}),

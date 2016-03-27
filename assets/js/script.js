@@ -44,6 +44,7 @@ $(document).ready(function(){
                 "<td><%=path%></td>" +
                 "<td><%=server_protocol%></td> " +
                 "<td><%=ip_addr%></td> " +
+                "<td><%=priority%></td> " +
                 "</tr>");
             var rows = '';
             data['ajaxrequests'].forEach(function (item) {
@@ -53,6 +54,7 @@ $(document).ready(function(){
                     path: item['path'],
                     server_protocol: item['server_protocol'],
                     ip_addr: item['ip_addr'],
+                    priority: item['priority'],
                     bold_class: item['viewed'] == false ? 'bold-font' : '',
                 });
                 rows += row;

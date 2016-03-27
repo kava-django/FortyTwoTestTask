@@ -7,3 +7,4 @@ class Request(models.Model):
     server_protocol = models.CharField(max_length=12)
     ip_addr = models.CharField(max_length=100)
     viewed = models.BooleanField(default=False)
+    priority = models.IntegerField(default=1)
