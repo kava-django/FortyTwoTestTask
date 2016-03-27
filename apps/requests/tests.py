@@ -29,3 +29,17 @@ class RequestsModelTest(TestCase):
     def test_ajax(self):
         response = self.client.post('/requests/ajaxrequests/', {'data': json.dumps([{'id': 1, 'viewed': False}, {'id': 2, 'viewed': True}])}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(Request.objects.filter(viewed=True).count(), 1)
+
+class PriorityTest(TestCase):
+    def setUp(self):
+        for i in range(20, 40):
+            Request.objects.create(date=datetime.datetime.now(), method='POST', path='/', server_protocol='HTTP/1.1', ip_addr='31.215.125.%d'%(i), viewed=False)
+
+    def test_priority(self):
+        for i in range(1, 11):
+            Request.objects.create(date=datetime.datetime.now(), method='POST', path='/', server_protocol='HTTP/1.1', ip_addr='31.215.125.%d'%(i), viewed=False, priority=0)
+        response = self.client.get('/requests/')
+        self.assertNotContains(response, '<td>0</td>')
+
+
+        
