@@ -1,19 +1,43 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
+
 {% block content %}
-<div class="container">
-  <div class="page-header">
-    <h1 class="descr">42 Coffee Cups Test Assignment</h1>
+
       <div class="jumbotron">
             <div class="row">
               <div class="col-sm-6">
+                <div><b>Name:</b> Pavlo</div>
+                <div><b>Last Name:</b> Bredikhin</div>
+                <div><b>Date of birth:</b> 12 July, 1990</div>
+                <div><b>Bio</b> <div>Become Django Developer</div></div>
+              </div>
+
+              <div class="col-sm-6">
+                <div><b>Contacts</b></div>
+                <div><b>Email:</b> kava.django@gmail.com</div>
+                <div><b>Jabber:</b> kava-django@42cc.co</div>
+                <div><b>Skype:</b> ng_1990</div>
+                <div><b>Other contacts</b>
+                <div>https://github.com/kava-django/FortyTwoTestTask/tree/t1_contact</div>
+              </div>
+          </div>
+      </div>
+
+{% comment %}
                 <div><b>Name:</b> {{ contact.name }}</div>
                 <div><b>Last Name:</b> {{ contact.surname }}</div>
                 <div><b>Date of birth:</b> {{ contact.date_of_birth|date:"d F, Y" }}</div>
-                <div><b>Bio</b>
-                <div>{{ contact.bio|linebreaksbr }}</div>
+                <div><b>Photo:</b>
+                <div>
+                {% if contact.photo %}
+                <img src="{{ contact.photo.url }}">
+                {% endif %}
                 </div>
                 </div>
+              </div>
+
               <div class="col-sm-6">
                 <div><b>Contacts</b></div>
                 <div><b>Email:</b> {{ contact.email }}</div>
@@ -21,11 +45,13 @@
                 <div><b>Skype:</b> {{ contact.skype }}</div>
                 <div><b>Other contacts</b>
                 <div>{{ contact.other_contacts|linebreaksbr }}</div>
+                </div>
+                <div><b>Bio</b>
+                <div>{{ contact.bio|linebreaksbr }}</div>
+                </div>
               </div>
-
-           </div>
           </div>
       </div>
-  </div>
-</div>
+<p><a href="{% url 'edit' contact.id %}">edit</a> <a href="{% url 'requests' %}">requests</a></p>
+{% endcomment %}
 {% endblock content %}
